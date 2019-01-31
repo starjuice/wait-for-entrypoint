@@ -13,6 +13,7 @@ It requires either nc or bash and operates as follows:
 The script is configured with the following environment variables:
 
 * `WAIT_FOR_SERVICES`      - Space-delimited list of host:port TCP services. E.g. webserver:443 or 10.0.0.4:80.
+* `WAIT_FOR_SECONDS`       - Seconds to wait for all services to become available. Defaults to infinity.
 * `WAIT_FOR_VERBOSE`       - If "1", print message to stdout for each service.
 * `WAIT_FOR_AS_ENTRYPOINT` - Unless "0", act as docker entrypoint for command-line arguments.
 
