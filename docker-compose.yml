@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    image: httpd:2.4
+  client:
+    build: .
+    environment:
+      WAIT_FOR_SERVICES: web:80
+      WAIT_FOR_VERBOSE: 1
+    links:
+      - web
