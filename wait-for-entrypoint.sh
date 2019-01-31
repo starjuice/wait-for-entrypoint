@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # https://github.com/starjuice/wait-for-entrypoint
 #
@@ -15,7 +15,14 @@ for service in ${WAIT_FOR_SERVICES}; do
 	if [ "${WAIT_FOR_VERBOSE}" = "1" ]; then
 		echo Waiting for ${host}:${port}...
 	fi
-	echo > /dev/tcp/${host}/${port}
+	if which nc >/dev/null 2>&1; then
+		nc $host $port
+	elif [ -x /bin/bash ]; then
+		/bin/bash -c "echo > /dev/tcp/${host}/${port}"
+	else
+		echo $(basename $0): error: neither bash nor nc are available 1>&2
+		exit 1
+	fi
 done
 
 if [ "${WAIT_FOR_AS_ENTRYPOINT}" != "0" ]; then
